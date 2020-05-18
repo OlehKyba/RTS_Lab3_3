@@ -232,7 +232,7 @@ export default class App extends Component {
                     placeholder="delta"
                     onBlur={() => setFieldTouched('delta')}
                 />
-                {touched.d && errors.d &&
+                {touched.delta && errors.delta &&
                 <Text style={{ fontSize: 10, color: 'red' }}>{errors.delta}</Text>
                 }
 
