@@ -1,0 +1,17 @@
+{
+  "name": "rtsLab33",
+  "displayName": "rtsLab33",
+  "expo": {
+    "name": "rtsLab33",
+    "slug": "rtsLab33",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
