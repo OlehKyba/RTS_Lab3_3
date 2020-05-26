@@ -12,11 +12,11 @@ const randomInt = (min, max) => Math.floor(random(min, max));
 
 
 class Gene {
-  constructor(populationSize, y, coefficients=[1,1,2], mutationProbability=0.05) {
+  constructor(populationSize, y, coefficients=[1,1,2]) {
     this.y = y;
     this.chromosomSize = coefficients.length;
     this.coefficients = coefficients;
-    this.mutationProbabiliy = mutationProbability;
+    this.mutationProbabiliy = 0;
 
     this.chromosoms = Array.from({length: populationSize}, () =>
         new Chromosome(this.chromosomSize, 0, 10));
@@ -73,6 +73,20 @@ class Gene {
     }
   }
 
+  optimalMutateProbability(steps, delta){
+    const mutationStep = 0.01;
+    let res;
+    while (this.mutationProbabiliy < 1){
+      res = this.handler(steps, delta);
+      if(res.message !== 'Not enough steps!'){
+        res.message += `\nThe optimal probability of a mutation: ${this.mutationProbabiliy}.`
+        return res;
+      }
+      this.mutationProbabiliy += mutationStep;
+    }
+    return res;
+  }
+
 }
 
 class Chromosome {
@@ -104,12 +118,11 @@ export default class App extends Component {
   }
 
   onSubmitHandler = ({ a, b, c, d, y, delta, iterationsCount }) => {
-    const mutationProbability = 0.05;
     const coefficients = [a, b, c, d];
     const populationSize = 20;
 
-    const gene = new Gene(populationSize, y, coefficients, mutationProbability);
-    const {message, xArray} = gene.handler(iterationsCount, delta);
+    const gene = new Gene(populationSize, y, coefficients);
+    const {message, xArray} = gene.optimalMutateProbability(iterationsCount, delta);
 
     Alert.alert('Message!', message);
     this.setState({xArray});
